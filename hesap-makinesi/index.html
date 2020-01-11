@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+	.tablo{
+	margin: auto;
+	width: 360px;
+	}
+	table{
+		background-color: lightgrey;
+	}
+	table .btn {
+		width: 60px;
+		background: gray;
+		text-align: center;
+		line-height: 60px;
+		color: #fff;
+		font-size: 40px;
+	}
+	#a2{
+		text-align: right;
+		padding: 10px
+		line-height: 60px;
+		background: #ccc;
+		font-size: 50px;
+		box-sizing: border-box;
+	}
+	#a1{
+		text-align: right;
+		padding: 5px;
+		background: #aaa;
+	}
+	</style>
+	<title>Aziz Yazılımları</title>
+</head>
+<body>
+<div class="tablo">
+	<h1>HESAP MAKİNESİ</h1>
+	<table>
+		<tr>
+			<td id="a1" colspan="5"></td>
+		</tr>
+		<tr>
+			<td id="a2" colspan="5">0</td>
+		</tr>
+		<tr>
+			<td class="btn btnRakam">7</td>
+			<td class="btn btnRakam">8</td>
+			<td class="btn btnRakam">9</td>
+			<td class="btn opt">/</td>
+			<td class="btn optCE">CE</td>
+		</tr>
+			<tr>
+			<td class="btn btnRakam">4</td>
+			<td class="btn btnRakam">5</td>
+			<td class="btn btnRakam">6</td>
+			<td class="btn opt">*</td>
+			<td class="btn optC">C</td>
+		</tr>
+		</tr>
+			<tr>
+			<td class="btn btnRakam">1</td>
+			<td class="btn btnRakam">2</td>
+			<td class="btn btnRakam">3</td>
+			<td class="btn opt">-</td>
+			<td  rowspan="2" class="btn ee">=</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="btn btnRakam">0</td>
+			<td class="btn btnN">.</td>
+			<td class="btn opt">+</td>
+		</tr>
+	</table>
+</div>
+<script type="text/javascript">
+	var opt = "";
+	var btnRakam = document.querySelectorAll(".btnRakam");
+	var a2 = document.querySelector("#a2");
+	var opt = document.querySelectorAll(".opt");
+	var a1 = document.querySelector("#a1");
+	var optC = document.querySelector(".optC");
+	var optCE = document.querySelector(".optCE");
+	var ee = document.querySelector(".ee");
+	var btnN = document.querySelector(".btnN");
+	var kontrol = false;
+	var sonuc = 0;
+	btnRakam.forEach(function(element){
+		element.onclick=function(e){
+			if (a2.textContent == "0" || kontrol) {
+				a2.textContent = "";
+			}
+			a2.textContent += this.textContent;
+			kontrol = false;
+		}
+	});
+	opt.forEach(function(element){
+		element.onclick=function(e){
+			kontrol = true;
+			var yeni = this.textContent;
+			a1.textContent +=" "+a2.textContent+" "+yeni;
+			switch(opt){
+				case "+": a2.textContent = sonuc + Number(a2.textContent);break;
+				case "-": a2.textContent = sonuc - Number(a2.textContent);break;
+				case "*": a2.textContent = sonuc * Number(a2.textContent);break;
+				case "/": a2.textContent = sonuc / Number(a2.textContent);break;
+				default:break;
+			}
+				sonuc = Number(a2.textContent);
+				a2.textContent = Math.ceil((sonuc) * 100) / 100;
+				opt = yeni;
+		}
+	});
+	optC.onclick=function(){
+		a2.textContent = "0";
+	}
+	optCE.onclick=function(){
+		a2.textContent = "0";
+		a1.textContent = "";
+		sonuc = 0;
+		opt = "";
+	}
+	ee.onclick=function(){
+		a1.textContent = "";
+		kontrol = true;
+		switch(opt) {
+			case "+": a2.textContent = sonuc + Number(a2.textContent);break;
+			case "-": a2.textContent = sonuc - Number(a2.textContent);break;
+			case "*": a2.textContent = sonuc * Number(a2.textContent);break;
+			case "/": a2.textContent = sonuc / Number(a2.textContent);break;
+			default:break;
+		}
+		sonuc = Number(a2.textContent);
+		a2.textContent = Math.ceil((sonuc) * 100) / 100;
+		opt = "";
+	}
+	btnN.onclick=function(){
+		a2.textContent += ".";
+	}
+</script>
+</body>
+</html>
